@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -124,3 +125,9 @@ Route::get('access-request', function (Request $request) {
 
     $value = $request->cookie('name');
 })->name('request.get');
+
+
+
+Route::prefix('blog-post')->group(function () {
+    Route::get('show-form', [PostController::class, 'showForm']);
+});
