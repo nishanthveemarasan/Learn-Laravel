@@ -130,4 +130,8 @@ Route::get('access-request', function (Request $request) {
 
 Route::prefix('blog-post')->group(function () {
     Route::get('show-form', [PostController::class, 'showForm']);
+    Route::post('/create', [PostController::class, 'create']);
+    Route::post('/get', [PostController::class, 'get']);
 });
+
+Route::get('/home', [PostController::class, 'Home']);
