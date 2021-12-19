@@ -1,12 +1,14 @@
 <?php
 
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Image;
 use App\Models\PostTag;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -164,4 +166,14 @@ Route::post('/create-post', [PostController::class, 'create']);
 Route::get('/get-image', function () {
     $post = Post::find(1)->image->path;
     dd(Storage::delete($post));
+});
+
+Route::get('/poly-image', function () {
+    // $post = Post::with('image')->get()->toArray();
+    dd(Image::with('imageable')->get()->toArray());
+    $morph = Image::whereHasMorph(
+        'imageable',
+        [Post::class, User::class]
+    )->get()->toArray();
+    dd($morph);
 });

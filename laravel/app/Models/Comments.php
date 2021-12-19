@@ -24,10 +24,13 @@ class Comments extends Model
         });
     }
 
-    public function post()
-    {
-        return $this->belongsTo(Post::class, 'post_id');
-    }
+    // public function post()
+    // {
+    //     return $this->belongsTo(Post::class, 'post_id');
+    // }
 
-    
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
 }

@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
-    protected $fillable = ['post_id', 'path'];
+    protected $fillable = ['path'];
 
-    public function post()
+    // public function post()
+    // {
+    //     return $this->belongsTo(Post::class, 'post_id');
+    // }
+    public function imageable()
     {
-        return $this->belongsTo(Post::class, 'post_id');
+        return $this->morphTo();
     }
 }

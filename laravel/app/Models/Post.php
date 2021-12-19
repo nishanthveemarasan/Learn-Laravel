@@ -33,13 +33,17 @@ class Post extends Model
         return $query->where('status', $status);
     }
 
+    // public function comments()
+    // {
+    //     return $this->hasMany(Comments::class, 'post_id');
+    // }
     public function comments()
     {
-        return $this->hasMany(Comments::class, 'post_id');
+        return $this->morphMany(Comments::class , 'commentable');
     }
     public function latestComment()
     {
-        return $this->hasOne(Comments::class, 'post_id')->latestOfMany();
+        return $this->morphOne(Comments::class, 'commentable')->latestOfMany();
     }
     public function postTags()
     {
@@ -49,6 +53,6 @@ class Post extends Model
     }
     public function image()
     {
-        return $this->hasOne(Image::class, 'post_id');
+        return $this->morphOne(Image::class, 'imageable');
     }
 }
