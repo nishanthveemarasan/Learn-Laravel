@@ -2,24 +2,25 @@
 
 namespace Database\Factories;
 
+use App\Models\Comments;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PostFactory extends Factory
+class CommentsFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array
      */
-    protected $model = Post::class;
+    protected $model = Comments::class;
     public function definition()
     {
         return [
             'uuid' => (string)Str::orderedUuid(),
-            'title' => $this->faker->title,
-            'content' => $this->faker->text
+            'content' => $this->faker->text,
+            'post_id' => Post::factory()
         ];
     }
 }

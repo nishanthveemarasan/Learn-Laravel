@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\PostController;
+use App\Models\Post;
+use App\Models\PostTag;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -135,3 +137,21 @@ Route::prefix('blog-post')->group(function () {
 });
 
 Route::get('/home', [PostController::class, 'Home']);
+
+
+Route::get('relationShipMtoM', function () {
+    /* $tag1 = PostTag::create(['name' => 'Science']);
+    $tag2 = PostTag::create(['name' => 'Maths']);
+    $tag3 = PostTag::create(['name' => 'Chemistory']);
+    
+    $post = Post::find(2);
+
+    $post->tags()->attach($tag1);
+    $post->tags()->sync([$tag1->id]);
+    $post->tags()->syncWithoutDetaching([$tag2->id]);*/
+
+    $posts = Post::find(2)->tags()->syncWithoutDetaching([1 => ['active' => 1]]);
+    dd($posts);
+    $posts = Post::find(2)->tags()->get()->toArray();
+    dd($posts);
+});
