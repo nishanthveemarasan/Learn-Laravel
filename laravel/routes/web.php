@@ -6,6 +6,7 @@ use App\Models\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -154,4 +155,13 @@ Route::get('relationShipMtoM', function () {
     dd($posts);
     $posts = Post::find(2)->tags()->get()->toArray();
     dd($posts);
+});
+
+Route::get('/add-post', function () {
+    return view('add-post');
+});
+Route::post('/create-post', [PostController::class, 'create']);
+Route::get('/get-image', function () {
+    $post = Post::find(1)->image->path;
+    dd(Storage::delete($post));
 });

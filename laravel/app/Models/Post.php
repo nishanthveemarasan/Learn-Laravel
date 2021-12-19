@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Tag;
+use App\Models\Image;
 use App\Models\PostTag;
 use App\Models\Comments;
 use Illuminate\Support\Str;
@@ -45,5 +46,9 @@ class Post extends Model
         return $this->belongsToMany(PostTag::class, 'posts_tags', 'post_id', 'tag_id')
             ->withTimestamps();
         // ->withPivot('active');
+    }
+    public function image()
+    {
+        return $this->hasOne(Image::class, 'post_id');
     }
 }
