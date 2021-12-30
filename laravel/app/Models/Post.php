@@ -20,14 +20,6 @@ class Post extends Model
 
     protected $fillable = ['title', 'content'];
 
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->uuid = (string)Str::orderedUuid();
-        });
-    }
-
     public function scopeActive(Builder $query, $status)
     {
         return $query->where('status', $status);
@@ -39,7 +31,7 @@ class Post extends Model
     // }
     public function comments()
     {
-        return $this->morphMany(Comments::class , 'commentable');
+        return $this->morphMany(Comments::class, 'commentable');
     }
     public function latestComment()
     {
