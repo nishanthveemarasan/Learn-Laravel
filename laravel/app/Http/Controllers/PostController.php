@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CommentPostedMail;
 use App\Models\Post;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -55,5 +57,13 @@ class PostController extends Controller
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
+    }
+    public function sendEmail()
+    {
+        $post = Post::all()->last();
+        Mail::to('iamnishanthveema@gmail.com')->send(
+            new CommentPostedMail($post)
+        );
+        dd('mail sent');
     }
 }
