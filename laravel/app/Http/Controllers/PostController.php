@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\NotifyUsersPostCreated;
 use App\Mail\CommentPostedMail;
 use App\Models\Post;
 use Exception;
@@ -61,9 +62,19 @@ class PostController extends Controller
     public function sendEmail()
     {
         $post = Post::all()->last();
-        Mail::to('iamnishanthveema@gmail.com')->send(
+        // Mail::to('iamnishanthveema@gmail.com')->send(
+        //     new CommentPostedMail($post)
+        // );
+        NotifyUsersPostCreated::dispatch($post)->onConnection('database')->onQueue('high');
+        /* Mail::to('iamnishanthveema@gmail.com')->queue(
             new CommentPostedMail($post)
         );
+
+        $when = now()->addMinutes(10);
+        Mail::to('iamnishanthveema@gmail.com')->later(
+            $when,
+            new CommentPostedMail($post)
+        );*/
         dd('mail sent');
     }
 }
