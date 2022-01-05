@@ -19,8 +19,9 @@ class CommentsFactory extends Factory
     {
         return [
             'uuid' => (string)Str::orderedUuid(),
-            'content' => $this->faker->text,
-            'post_id' => Post::factory()
+            'content' => $this->faker->text(),
+            'commentable_id' => Post::factory(),
+            'commentable_type' => Post::class
         ];
     }
 }

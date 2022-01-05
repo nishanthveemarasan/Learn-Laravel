@@ -18,8 +18,8 @@ class PostFactory extends Factory
     {
         return [
             'uuid' => (string)Str::orderedUuid(),
-            'title' => $this->faker->title,
-            'content' => $this->faker->text
+            'title' => $this->faker->title(),
+            'content' => $this->faker->text()
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CommentPosted;
 use App\Jobs\NotifyUsersPostCreated;
 use App\Mail\CommentPostedMail;
 use App\Models\Post;
@@ -65,7 +66,7 @@ class PostController extends Controller
         // Mail::to('iamnishanthveema@gmail.com')->send(
         //     new CommentPostedMail($post)
         // );
-        NotifyUsersPostCreated::dispatch($post)->onConnection('database')->onQueue('high');
+        // NotifyUsersPostCreated::dispatch($post)->onConnection('database')->onQueue('high');
         /* Mail::to('iamnishanthveema@gmail.com')->queue(
             new CommentPostedMail($post)
         );
@@ -75,6 +76,8 @@ class PostController extends Controller
             $when,
             new CommentPostedMail($post)
         );*/
+        // event(new CommentPosted($post));
+        CommentPosted::dispatch($post);
         dd('mail sent');
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\CommentPosted;
+use App\Listeners\CacheSubscriber;
+use App\Listeners\NotifyAboutComment;
 use App\Models\Post;
 use App\Observers\PostObserver;
 use Illuminate\Auth\Events\Registered;
@@ -20,6 +23,13 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        CommentPosted::class => [
+            NotifyAboutComment::class
+        ]
+    ];
+
+    protected $subscribe = [
+        CacheSubscriber::class
     ];
 
     /**
@@ -29,6 +39,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Post::observe(PostObserver::class); 
+        Post::observe(PostObserver::class);
     }
 }
