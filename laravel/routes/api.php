@@ -24,7 +24,12 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
     // our routes to be protected will go in here
-
+    Route::prefix('posts')->group(function () {
+        Route::get('/', [PostController::class, 'index']);
+        Route::get('/{post:uuid}', [PostController::class, 'get']);
+        Route::delete('/{post:uuid}', [PostController::class, 'destroy']);
+        Route::patch('/{post:uuid}', [PostController::class, 'update']);
+    });
 });
 
 Route::get('sendEmail', [PostController::class, 'sendEmail']);
