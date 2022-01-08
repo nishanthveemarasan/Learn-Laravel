@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use Exception;
+use App\Models\Post;
+use App\Models\Comments;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -37,5 +38,13 @@ class PostController extends Controller
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
+    }
+
+    public function test(Post $post)
+    {
+        $post = Post::with('comments')->find(2);
+        return $post;
+        // dd($post->comments()->with('post')->get()->toArray());
+        return $post->with('comments')->get();
     }
 }
