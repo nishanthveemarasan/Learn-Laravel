@@ -92,18 +92,16 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        // Gate::authorize('delete-post', $post);
-        // Gate::authorize('edit-post', [$post, false]);
-        $response = Gate::inspect('edit-post', [$post, false]);
-        dd($response);
+        $this->authorize('delete', [$post, false]);
         dd($post->toArray());
     }
     public function update(Post $post)
     {
-        $response = Gate::inspect('edit-post', [$post, false]);
-        if (!$response->allowed()) {
-            return ['message' => $response->message()];
-        }
+        $this->authorize('update', $post);
+        // $response = Gate::inspect('edit-post', [$post, false]);
+        // if (!$response->allowed()) {
+        //     return ['mess' => $response->message()];
+        // }
         dd($post->toArray());
     }
 }
